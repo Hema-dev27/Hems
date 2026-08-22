@@ -1,35 +1,78 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { motion } from 'framer-motion'
+import Gallery from './components/Gallery'
+import AudioPlayer from './components/AudioPlayer'
+import initialMedia from './media'
 
-const Leaf = ({style, delay = 0}) => (
-  <motion.div
-    className="leaf"
-    style={style}
-    animate={{ y: [0, -40, 0], rotate: [0, 10, -10, 0], opacity: [0, 1, 1, 0] }}
-    transition={{ duration: 6, repeat: Infinity, delay }}
-  >
-    <svg viewBox="0 0 64 64" width="64" height="64" xmlns="http://www.w3.org/2000/svg">
-      <path d="M2 32c0 0 18-26 34-18 16 8 24 28 24 28s-24 14-40 6C8 44 2 32 2 32z" fill="#2f7a3e" />
-      <path d="M12 34c10-6 20-4 28 2" stroke="#19692f" strokeWidth="1.5" fill="none" opacity="0.6" />
+function HeartSvg(){
+  return (
+    <svg viewBox="0 0 24 24" width="72" height="72" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 21s-7-4.35-9.5-7.2C-0.2 9.6 3 4 7.5 5.6 9.6 6.3 11 8.2 12 9.4c1-1.2 2.4-3.1 4.5-3.8C21 4 24.2 9.6 21.5 13.8 19 16.65 12 21 12 21z" fill="var(--accent)" />
     </svg>
-  </motion.div>
-)
+  )
+}
 
-export default function App() {
+export default function App(){
+  const [media, setMedia] = useState(initialMedia)
+
+  const addFiles = (files)=>{
+    // create temporary object URLs for immediate preview (not persisted)
+    const created = files.map((f, idx)=>{
+      const type = f.type.startsWith('image') ? 'image' : f.type.startsWith('video') ? 'video' : 'audio'
+      return { id: `local-${Date.now()}-${idx}`, type, src: URL.createObjectURL(f), title: f.name }
+    })
+    setMedia(m=>[...created, ...m])
+  }
+
+  const imageItems = media.filter(m=>m.type==='image')
+  const audioItems = media.filter(m=>m.type==='audio')
+
   return (
     <div className="page">
+
       <div className="scene">
         <div className="card">
-          <h1 className="title">Happy Birthday</h1>
-          <p className="subtitle">To my love — lush, green, and full of life.</p>
+          <h1 className="title">For My Love</h1>
+          <p className="subtitle">A little site to celebrate you — photos, memories, and more.</p>
+          <div className="badge">Together — Forever</div>
         </div>
 
-        <Leaf style={{ left: '10%', top: '60%', transform: 'scale(0.9)' }} delay={0} />
-        <Leaf style={{ left: '25%', top: '20%', transform: 'scale(1.1)' }} delay={1.2} />
-        <Leaf style={{ right: '18%', top: '30%', transform: 'scale(0.8)' }} delay={0.6} />
-        <Leaf style={{ left: '60%', top: '70%', transform: 'scale(1.2)' }} delay={2} />
+        <motion.div className="floating-blob" animate={{ y: [0, -8, 0] }} transition={{ duration: 5, repeat: Infinity }} />
 
-        <motion.div className="floating-blob" animate={{ y: [0, -10, 0] }} transition={{ duration: 4, repeat: Infinity }} />
+        <motion.div className="heart" style={{ left: '12%', top: '62%', transform: 'scale(1)' }} animate={{ y: [0, -16, 0], opacity: [0,1,1,0] }} transition={{ duration:9, repeat: Infinity, delay:0 }}>
+          <HeartSvg />
+        </motion.div>
+        <motion.div className="heart" style={{ left: '30%', top: '22%', transform: 'scale(1.1)' }} animate={{ y: [0, -20, 0], opacity: [0,1,1,0] }} transition={{ duration:10, repeat: Infinity, delay:1.2 }}>
+          <HeartSvg />
+        </motion.div>
+        <motion.div className="heart" style={{ right: '18%', top: '34%', transform: 'scale(0.9)' }} animate={{ y: [0, -14, 0], opacity: [0,1,1,0] }} transition={{ duration:8, repeat: Infinity, delay:0.6 }}>
+          <HeartSvg />
+        </motion.div>
+
+      </div>
+
+      <div className="content">
+        <section>
+          <h2>Photos & Videos</h2>
+          <p className="lead">A curated collection of moments — click any item to view larger. Add temporary files for quick previews.</p>
+          <Gallery items={media} onAddFiles={addFiles} />
+        </section>
+
+        <section>
+          <h2>Love Letter</h2>
+          <p>I still remember the first time we met. Every day since has felt like a small, perfect adventure. This page holds our photos, our songs, and a few videos that remind me of you.</p>
+          <p className="muted">Feel free to add more media below — these previews are temporary unless copied into <code>/public/media/</code>.</p>
+        </section>
+
+        <section>
+          <h2>Music</h2>
+          <AudioPlayer tracks={audioItems} />
+        </section>
+
+        <section>
+          <h2>More Memories</h2>
+          <p className="lead">Below you can paste or upload short video clips. They will appear in the gallery for quick playback.</p>
+        </section>
       </div>
     </div>
   )
