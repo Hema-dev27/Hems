@@ -14,6 +14,14 @@ function HeartSvg(){
 
 export default function App(){
   const [media, setMedia] = useState(initialMedia)
+  const tabs = [
+    { id: 'all', label: 'All' },
+    { id: 'photos', label: 'Photos' },
+    { id: 'videos', label: 'Videos' },
+    { id: 'letters', label: 'Love Letters' },
+    { id: 'more', label: 'More Memories' }
+  ]
+  const [activeTab, setActiveTab] = useState('all')
 
   const addFiles = (files)=>{
     // create temporary object URLs for immediate preview (not persisted)
@@ -52,27 +60,59 @@ export default function App(){
       </div>
 
       <div className="content">
-        <section>
-          <h2>Photos & Videos</h2>
-          <p className="lead">A curated collection of moments — click any item to view larger. Add temporary files for quick previews.</p>
-          <Gallery items={media} onAddFiles={addFiles} />
-        </section>
+        <div className="tabs">
+          {tabs.map(t => (
+            <button key={t.id} className={`tab-button ${activeTab===t.id? 'active':''}`} onClick={()=>setActiveTab(t.id)}>{t.label}</button>
+          ))}
+        </div>
 
-        <section>
-          <h2>Love Letter</h2>
-          <p>I still remember the first time we met. Every day since has felt like a small, perfect adventure. This page holds our photos, our songs, and a few videos that remind me of you.</p>
-          <p className="muted">Feel free to add more media below — these previews are temporary unless copied into <code>/public/media/</code>.</p>
-        </section>
+        <div className="tab-content">
+          {activeTab === 'all' && (
+            <section>
+              <h2>All Media</h2>
+              <Gallery items={media} onAddFiles={addFiles} />
+            </section>
+          )}
 
-        <section>
-          <h2>Music</h2>
-          <AudioPlayer tracks={audioItems} />
-        </section>
+          {activeTab === 'photos' && (
+            <section>
+              <h2>Photos</h2>
+              <Gallery items={media.filter(m=>m.type==='image')} onAddFiles={addFiles} />
+            </section>
+          )}
 
-        <section>
-          <h2>More Memories</h2>
-          <p className="lead">Below you can paste or upload short video clips. They will appear in the gallery for quick playback.</p>
-        </section>
+          {activeTab === 'videos' && (
+            <section>
+              <h2>Videos</h2>
+              <Gallery items={media.filter(m=>m.type==='video')} onAddFiles={addFiles} />
+            </section>
+          )}
+
+          {activeTab === 'letters' && (
+            <section>
+              <h2>Love Letters</h2>
+              <div className="letters">
+                <article className="letter">
+                  <h3>To my love</h3>
+                  <p>I still remember the first time we met — warm, effortless, like the world folded into one perfect moment. This little site is for our memories.</p>
+                </article>
+                <div className="letter-form">
+                  <label>Write a new letter
+                    <textarea placeholder="Write your love letter here..." />
+                  </label>
+                </div>
+              </div>
+            </section>
+          )}
+
+          {activeTab === 'more' && (
+            <section>
+              <h2>More Memories</h2>
+              <p className="lead">Short clips and candid moments. Use the 'Add files' button in each gallery to preview additional content.</p>
+              <Gallery items={media.slice(0,8)} onAddFiles={addFiles} />
+            </section>
+          )}
+        </div>
       </div>
     </div>
   )

@@ -31,6 +31,18 @@ body{
 
 /* Media gallery styles */
 .content{max-width:980px;margin:28px auto;padding:0 24px}
+/* Tabs */
+.tabs{display:flex;gap:8px;margin-bottom:16px;align-items:center}
+.tab-button{background:transparent;border:1px solid rgba(92,10,21,0.06);padding:8px 12px;border-radius:10px;color:var(--accent-dark);cursor:pointer;font-weight:600}
+.tab-button.active{background:linear-gradient(90deg,var(--accent),var(--accent-dark));color:#fff;border-color:transparent;box-shadow:0 8px 24px rgba(92,10,21,0.08)}
+.tab-content section{margin-bottom:20px}
+
+/* Letters */
+.letters{display:grid;grid-template-columns:1fr 320px;gap:18px;align-items:start}
+.letter{background:linear-gradient(180deg,#fff,#fff);padding:18px;border-radius:12px;box-shadow:0 8px 24px rgba(92,10,21,0.04)}
+.letter h3{margin:0 0 8px;color:var(--accent)}
+.letter-form label{display:block;font-size:13px;color:var(--muted)}
+.letter-form textarea{width:100%;min-height:160px;padding:12px;border-radius:10px;border:1px solid #f0dede;margin-top:8px;font-family:inherit}
 .gallery{background:rgba(255,255,255,0.85);padding:18px;border-radius:12px;box-shadow:0 8px 30px rgba(92,10,21,0.04)}
 .gallery-actions{display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap}
 .gallery .btn{background:var(--accent);color:#fff;padding:8px 12px;border-radius:8px;cursor:pointer;display:inline-flex;align-items:center}
