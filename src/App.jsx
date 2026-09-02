@@ -15,7 +15,8 @@ const favoriteMoments = [
   { title: 'Those Little Things', detail: 'One day Just like that I mentioned why cant you try Running And you actually did it❤️ result is in the second pic.', image: '/media/instaMarathon.jpg' },
   { title: 'FOR HER', detail: 'For Her❤️ , I still remember the exact feeling i had that day , I just woke unlocked my phone turned on the mobile data , And the first thing i saw is this PIC, Lots of Loveee.', image: '/media/forHER.jpg' },
   { title: 'Robbery', detail: 'You stealed The Letter ? 😂 , Just like how you stealed me❤️.', image: '/media/letterH.jpg' },
-  { title: 'Every little “us” moment', detail: 'Because love is not just big gestures — it is the feeling of being chosen.', image: '/media/us.jpg' }
+  { title: 'we are there for each other', detail: 'Happiness is Happiness', image: '/media/WeAre.jpg' },
+  { title: 'Notes', detail: 'You made my day That Day , Once i randomly mentioned about the notes app and you bought this❤️.', image: '/media/Notes.jpg' }
 ]
 
 function HeartSvg() {
