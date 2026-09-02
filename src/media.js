@@ -9,6 +9,7 @@ const initialMedia = [
   { id: 'img-6', type: 'image', src: '/media/Yard.jpg', title: 'First Pic Together' },
   { id: 'vid-1', type: 'video', src: '/media/badminton.mp4', title: '😘🔥🔥🔥🔥' },
   { id: 'img-7', type: 'image', src: '/media/MiraClib.jpg', title: 'My Cute Little Baby' },
+  { id: 'vid-2', type: 'video', src: '/media/Yes.mp4', title:'Its CRIME to be this handsome😘😘' },
   { id: 'aud-1', type: 'audio', src: '/media/song1.mp3', title: 'Birthday song' }
 ]
 
