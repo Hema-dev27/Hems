@@ -217,9 +217,79 @@ button {
 
 .mini-stats {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: 14px;
   margin-top: 28px;
+}
+
+.mini-countdown {
+  grid-column: auto;
+  display: grid !important;
+  grid-template-columns: minmax(190px, 0.8fr) 1.2fr;
+  align-items: center;
+  gap: 18px !important;
+  background: linear-gradient(135deg, rgba(255, 238, 242, 0.9), rgba(237, 245, 238, 0.9)) !important;
+}
+
+.countdown-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.countdown-ring {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  border-radius: 50%;
+  background: rgba(184, 109, 115, 0.14);
+  color: var(--rose-deep);
+  font-size: 1.2rem;
+}
+
+.countdown-heading strong,
+.countdown-label {
+  display: block;
+}
+
+.countdown-label {
+  margin-bottom: 4px;
+  color: var(--muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.countdown-heading strong {
+  color: var(--rose-deep);
+  font-size: 1rem;
+}
+
+.countdown-values {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.countdown-values div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: center;
+}
+
+.countdown-values strong {
+  color: var(--rose-deep);
+  font-family: Georgia, serif;
+  font-size: 1.45rem;
+}
+
+.countdown-values span {
+  color: var(--muted);
+  font-size: 0.68rem;
+  text-transform: uppercase;
 }
 
 .mini-stats div {
@@ -766,6 +836,28 @@ button {
   font-size: 1.2rem;
 }
 
+.external-audio {
+  flex-direction: column;
+  gap: 8px;
+  color: var(--rose-deep);
+  text-decoration: none;
+}
+
+.external-audio span {
+  font-size: 2.4rem;
+}
+
+.external-listen-link {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 11px 16px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--rose) 0%, var(--rose-deep) 100%);
+  color: white;
+  font-weight: 700;
+  text-decoration: none;
+}
+
 .thumb-strip {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -979,6 +1071,14 @@ button {
   .moments-grid {
     grid-template-columns: 36px minmax(0, 1fr) 36px;
     gap: 6px;
+  }
+
+  .mini-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .mini-countdown {
+    grid-template-columns: 1fr;
   }
 
   .moment-card {

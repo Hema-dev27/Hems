@@ -10,7 +10,9 @@ const initialMedia = [
   { id: 'vid-1', type: 'video', src: '/media/badminton.mp4', title: '😘🔥🔥🔥🔥' },
   { id: 'img-7', type: 'image', src: '/media/MiraClib.jpg', title: 'My Cute Little Baby' },
   { id: 'vid-2', type: 'video', src: '/media/Yes.mp4', title:'Its CRIME to be this handsome😘😘' },
-  { id: 'aud-1', type: 'audio', src: '/media/song1.mp3', title: 'Birthday song' }
+  { id: 'img-8', type: 'image', src: '/media/Milano.jpg', title: 'As Sweet as IceCream' },
+  { id: 'vid-3', type: 'video', src: '/media/Rose.mp4', title:'Not Just a ROSE🌹🌹🌹🌹' },
+  { id: 'aud-1', type: 'external-audio', src: 'https://www.jiosaavn.com/song/baby-now-that-i-found-you/Cj0fdTtzR0E', title: 'Baby, Now That I Found You' }
 ]
 
 export default initialMedia

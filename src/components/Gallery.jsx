@@ -1,7 +1,7 @@
-import React, {useState, useRef, useEffect} from 'react'
+import React, {useState, useEffect} from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-export default function Gallery({items, onAddFiles}){
+export default function Gallery({items}){
   const [active, setActive] = useState(null)
   const [currentIndex, setCurrentIndex] = useState(0)
 
@@ -13,8 +13,6 @@ export default function Gallery({items, onAddFiles}){
 
     setCurrentIndex((prev) => Math.min(prev, items.length - 1))
   }, [items.length])
-
-  const handleAdd = (files)=> onAddFiles(files)
 
   const hasItems = items.length > 0
   const currentItem = hasItems ? items[currentIndex] : null
@@ -31,13 +29,6 @@ export default function Gallery({items, onAddFiles}){
 
   return (
     <div className="gallery">
-      <div className="gallery-actions">
-        <label className="btn">Add files (temp preview)
-          <input type="file" multiple accept="image/*,video/*,audio/*" onChange={(e)=>handleAdd(Array.from(e.target.files))} />
-        </label>
-        <small className="hint">Place permanent files in <code>/public/media/</code> and update <code>src/media.js</code>.</small>
-      </div>
-
       {hasItems ? (
         <div className="gallery-showcase">
           <div className="showcase-header">
@@ -63,6 +54,12 @@ export default function Gallery({items, onAddFiles}){
             {currentItem.type === 'image' && <img loading="lazy" src={currentItem.src} alt={currentItem.title} />}
             {currentItem.type === 'video' && <video loading="lazy" src={currentItem.src} muted playsInline autoPlay loop />}
             {currentItem.type === 'audio' && <div className="audio-thumb feature-audio">🎵 {currentItem.title}</div>}
+            {currentItem.type === 'external-audio' && (
+              <a className="audio-thumb feature-audio external-audio" href={currentItem.src} target="_blank" rel="noreferrer">
+                <span>♫</span>
+                <strong>Listen on JioSaavn</strong>
+              </a>
+            )}
             <div className="floating-gallery-hearts" aria-hidden="true">
               <span>♥</span>
               <span>♡</span>
@@ -82,7 +79,7 @@ export default function Gallery({items, onAddFiles}){
               >
                 {it.type === 'image' && <img loading="lazy" alt={it.title} src={it.src} />}
                 {it.type === 'video' && <video loading="lazy" muted playsInline src={it.src} />}
-                {it.type === 'audio' && <span className="mini-audio">♫</span>}
+                {(it.type === 'audio' || it.type === 'external-audio') && <span className="mini-audio">♫</span>}
                 <span className="thumb-label">{it.title}</span>
               </button>
             ))}
@@ -101,6 +98,9 @@ export default function Gallery({items, onAddFiles}){
               {active.type === 'image' && <img src={active.src} alt={active.title} />}
               {active.type === 'video' && <video src={active.src} controls autoPlay />}
               {active.type === 'audio' && <audio src={active.src} controls autoPlay />}
+              {active.type === 'external-audio' && (
+                <a className="external-listen-link" href={active.src} target="_blank" rel="noreferrer">Open on JioSaavn</a>
+              )}
             </motion.div>
           </motion.div>
         )}

@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import Gallery from './components/Gallery'
 import initialMedia from './media'
 
 const reasons = [
-  'Your smile makes my whole world feel lighter.',
-  'You make even ordinary days feel special.',
+  '♾️ For you, I would have travelled endlessly around these curves.',
+  'You are my old wine 🍷 in a new Glass 🥂.',
   'Your calm heart makes me feel safe and at home.',
-  'I love how easy it is to be my real self with you.',
-  'You are my favorite person to laugh with and dream with.'
+  'I strongly believe that one person can change everything, and probably that one person is you 🤞.',
+  'The Dream I dreamt is gonna be reality soon, and that dream is you.',
 ]
 
 const favoriteMoments = [
@@ -16,7 +16,9 @@ const favoriteMoments = [
   { title: 'FOR HER', detail: 'For Her❤️ , I still remember the exact feeling i had that day , I just woke unlocked my phone turned on the mobile data , And the first thing i saw is this PIC, Lots of Loveee.', image: '/media/forHER.jpg' },
   { title: 'Robbery', detail: 'You stealed The Letter ? 😂 , Just like how you stealed me❤️.', image: '/media/letterH.jpg' },
   { title: 'we are there for each other', detail: 'Happiness is Happiness', image: '/media/WeAre.jpg' },
-  { title: 'Notes', detail: 'You made my day That Day , Once i randomly mentioned about the notes app and you bought this❤️.', image: '/media/Notes.jpg' }
+  { title: 'Notes', detail: 'You made my day That Day , Once i randomly mentioned about the notes app and you bought this❤️.', image: '/media/Notes.jpg' },
+  { title: 'ALL', detail: '❤️❤️❤️❤️❤️.', image: '/media/MyBirthdayGifts.jpg' },
+  { title: 'Nothing Before You', detail: 'NBC-Nothing Before Coffee❌ NBU-Nothing Before You✅', image: '/media/NBC.jpg' }
 ]
 
 function HeartSvg() {
@@ -29,16 +31,48 @@ function HeartSvg() {
 
 export default function App() {
   const [media, setMedia] = useState(initialMedia)
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 })
   const tabs = [
     { id: 'all', label: 'All' },
     { id: 'photos', label: 'Photos' },
     { id: 'videos', label: 'Videos' },
-    { id: 'letters', label: 'Love Letter' },
+    { id: 'letters', label: 'Birthday Letter' },
     { id: 'more', label: 'More Memories' }
   ]
 
   const [activeTab, setActiveTab] = useState('all')
   const [activeMoment, setActiveMoment] = useState(0)
+  const galleryPanelRef = useRef(null)
+
+  const openGalleryTab = (tab) => {
+    setActiveTab(tab)
+    window.setTimeout(() => galleryPanelRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0)
+  }
+
+  useEffect(() => {
+    const now = new Date()
+    const weddingDate = new Date(now.getFullYear(), 10, 19)
+
+    if (weddingDate <= now) {
+      weddingDate.setFullYear(weddingDate.getFullYear() + 1)
+    }
+
+    const updateCountdown = () => {
+      const difference = Math.max(0, weddingDate.getTime() - Date.now())
+      const totalSeconds = Math.floor(difference / 1000)
+
+      setTimeLeft({
+        days: Math.floor(totalSeconds / 86400),
+        hours: Math.floor((totalSeconds % 86400) / 3600),
+        minutes: Math.floor((totalSeconds % 3600) / 60),
+        seconds: totalSeconds % 60
+      })
+    }
+
+    updateCountdown()
+    const timer = window.setInterval(updateCountdown, 1000)
+    return () => window.clearInterval(timer)
+  }, [])
 
   const showPreviousMoment = () => {
     setActiveMoment((current) => (current === 0 ? favoriteMoments.length - 1 : current - 1))
@@ -79,22 +113,25 @@ export default function App() {
           </p>
 
           <div className="hero-actions">
-            <motion.button whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.98 }} type="button" className="primary-btn" onClick={() => setActiveTab('all')}>Open our memories</motion.button>
-            <motion.button whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.98 }} type="button" className="secondary-btn" onClick={() => setActiveTab('letters')}>Read my note</motion.button>
+            <motion.button whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.98 }} type="button" className="primary-btn" onClick={() => openGalleryTab('all')}>Open our memories</motion.button>
+            <motion.button whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.98 }} type="button" className="secondary-btn" onClick={() => openGalleryTab('letters')}>Read my note</motion.button>
           </div>
 
           <div className="mini-stats">
-            <div>
-              <strong>365</strong>
-              <span>days I love you</span>
-            </div>
-            <div>
-              <strong>∞</strong>
-              <span>reasons to stay</span>
-            </div>
-            <div>
-              <strong>Us</strong>
-              <span>my favorite forever</span>
+            <div className="mini-countdown" aria-label="Countdown to the wedding on 19th November">
+              <div className="countdown-heading">
+                <span className="countdown-ring">♥</span>
+                <div>
+                  <span className="countdown-label">Counting down to us</span>
+                  <strong>19th &amp; 20th November</strong>
+                </div>
+              </div>
+              <div className="countdown-values">
+                <div><strong>{timeLeft.days}</strong><span>days</span></div>
+                <div><strong>{String(timeLeft.hours).padStart(2, '0')}</strong><span>hours</span></div>
+                <div><strong>{String(timeLeft.minutes).padStart(2, '0')}</strong><span>mins</span></div>
+                <div><strong>{String(timeLeft.seconds).padStart(2, '0')}</strong><span>secs</span></div>
+              </div>
             </div>
           </div>
         </motion.div>
@@ -142,7 +179,7 @@ export default function App() {
           </article>
 
           <aside className="reasons-card">
-            <p className="eyebrow soft">Why I adore you</p>
+            <p className="eyebrow soft">ANYTHING FOR YOUUU</p>
             <ul>
               {reasons.map((reason) => (
                 <li key={reason}>{reason}</li>
@@ -179,7 +216,7 @@ export default function App() {
           </div>
         </section>
 
-        <section className="gallery-panel section-shell">
+        <section ref={galleryPanelRef} className="gallery-panel section-shell">
           <div className="tabs" role="tablist" aria-label="Memory sections">
             {tabs.map((tab) => (
               <button
@@ -199,12 +236,12 @@ export default function App() {
             {activeTab === 'videos' && <section><h2>Videos</h2>{renderGallery(media.filter((item) => item.type === 'video'))}</section>}
             {activeTab === 'letters' && (
               <section>
-                <h2>Love note</h2>
+                <h2>To Love With Love</h2>
                 <div className="letters">
                   <article className="letter">
-                    <h3>Dear my love,</h3>
+                    <h3>Uncle,</h3>
                     <p>
-                      Happy birthday to you, my favorite person. Thank you for being the calm in my chaos, the light in my quietest
+                      Happy birthday to you, I am Happy to share all my Firsts with My ONLY Last, You are the light in my quietest
                       moments, and the beautiful reason my heart feels so full.
                     </p>
                     <p>
