@@ -12,10 +12,10 @@ const reasons = [
 ]
 
 const favoriteMoments = [
-  { title: 'The first time we clicked', detail: 'Like two pieces of a quiet, beautiful story finally meeting.' },
-  { title: 'Our laughter', detail: 'The kind that softens the world and turns small moments into memories.' },
-  { title: 'Our calm dates', detail: 'The simple times were the ones that stayed with me the longest.' },
-  { title: 'Every little “us” moment', detail: 'Because love is not just big gestures — it is the feeling of being chosen.' }
+  { title: 'The first time we clicked', detail: 'Like two pieces of a quiet, beautiful story finally meeting.', image: '/media/us.jpg' },
+  { title: 'Our laughter', detail: 'The kind that softens the world and turns small moments into memories.', image: '/media/us.jpg' },
+  { title: 'Our calm dates', detail: 'The simple times were the ones that stayed with me the longest.', image: '/media/us.jpg' },
+  { title: 'Every little “us” moment', detail: 'Because love is not just big gestures — it is the feeling of being chosen.', image: '/media/us.jpg' }
 ]
 
 function HeartSvg() {
@@ -53,6 +53,7 @@ export default function App() {
       <div className="sparkles" aria-hidden="true" />
 
       <header className="hero section-shell">
+        <div className="floating-tag">Made with love</div>
         <motion.div
           className="hero-copy"
           initial={{ opacity: 0, y: 24 }}
@@ -62,10 +63,9 @@ export default function App() {
           style={{ transformStyle: 'preserve-3d' }}
         >
           <p className="eyebrow">Happy Birthday, My Love</p>
-          <h1>To the one who makes my world feel soft, warm, and full of light.</h1>
+          <h1>In Every Universe , Every Version of ME loves Every Version of YOU.</h1>
           <p className="lead">
-            Every day with you feels like a gentle memory I want to keep forever. You are my comfort,
-            my favorite laughter, my safe place, and my biggest blessing.
+            I think every last time we met , I did something for the first time. I don't know you deeply when i said yes, But you gave me every reason to thank God for that decision and vice versa 😂😁😉
           </p>
 
           <div className="hero-actions">
@@ -99,8 +99,11 @@ export default function App() {
         >
           <div className="photo-frame">
             <div className="frame-glow" />
-            <div className="portrait-card">
-              <span className="portrait-badge">You + Me</span>
+            <div
+              className="portrait-card"
+              style={{ backgroundImage: "linear-gradient(180deg, rgba(138, 61, 75, 0.15), rgba(127, 157, 138, 0.18)), url('/media/us.jpg')" }}
+            >
+              <span className="portrait-badge">You + I</span>
               <h2>Forever looks beautiful with you.</h2>
             </div>
           </div>
@@ -118,14 +121,13 @@ export default function App() {
         <section className="story-grid section-shell">
           <article className="message-card">
             <p className="eyebrow soft">For my favorite human</p>
-            <h3>There is a kind of love that feels like home.</h3>
+            <h3>Sometimes medicine is the person</h3>
             <p>
-              With you, even a quiet evening feels beautiful. Even a normal day turns gentle and warm. You are the kind of person
-              who makes life feel softer, kinder, and more full of meaning.
+              Loving you quietly is the loudest thing i ever did ,And no body heard it ,Not even you ,
+              Probably not even me ,But i know it was there somewhere ,Somewhere in the depth of my heart ,Somewhere in the depth of my mind ,Somewhere in the depth of my being ,Somewhere in the depth of my existence.
             </p>
             <p>
-              Happy birthday to the one I love most. May your year be filled with laughter, peace, adventure, and all the beauty you
-              deserve.
+              Every minute i spent with you is tattooed in my brain
             </p>
           </article>
 
@@ -148,6 +150,7 @@ export default function App() {
           <div className="moments-grid">
             {favoriteMoments.map((moment) => (
               <div className="moment-card" key={moment.title}>
+                <img className="moment-image" src={moment.image} alt={moment.title} />
                 <span>{moment.title}</span>
                 <p>{moment.detail}</p>
               </div>
