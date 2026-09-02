@@ -1039,9 +1039,42 @@ button {
     grid-template-columns: 1fr;
   }
 
+  .hero {
+    padding: 28px;
+  }
+
+  .hero-visual {
+    min-height: 420px;
+  }
+
+  .photo-frame {
+    height: 420px;
+  }
+
   .moments-grid {
     grid-template-columns: 42px minmax(0, 1fr) 42px;
     gap: 10px;
+  }
+
+  .moment-card {
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.9fr);
+    min-height: 320px;
+  }
+
+  .moment-image-wrap {
+    height: 320px;
+  }
+
+  .tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    padding-bottom: 6px;
+  }
+
+  .tab-button {
+    flex: 0 0 auto;
+    min-height: 44px;
   }
 }
 
@@ -1061,6 +1094,23 @@ button {
 
   .hero {
     padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .section-shell {
+    border-radius: 24px;
+  }
+
+  .floating-tag {
+    top: 12px;
+    right: 14px;
+    max-width: calc(100% - 28px);
+    padding: 8px 10px;
+    font-size: 0.58rem;
+  }
+
+  .hero-copy {
+    padding: 42px 2px 4px;
   }
 
   .hero-copy h1 {
@@ -1110,6 +1160,61 @@ button {
 
   .gallery .btn {
     width: 100%;
+  }
+
+  .gallery-panel {
+    padding-top: 18px;
+  }
+
+  .gallery {
+    padding: 12px;
+  }
+
+  .showcase-header {
+    align-items: flex-start;
+  }
+
+  .showcase-header h3 {
+    max-width: 15ch;
+    overflow-wrap: anywhere;
+  }
+
+  .featured-media {
+    padding: 10px;
+    border-radius: 20px;
+  }
+
+  .featured-media img,
+  .featured-media video {
+    max-height: 300px;
+  }
+
+  .thumb-strip {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 6px;
+  }
+
+  .thumb-chip {
+    flex: 0 0 170px;
+    min-height: 72px;
+  }
+
+  .media-modal {
+    padding: 10px;
+  }
+
+  .media-card {
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 20px;
+    padding: 16px 12px 12px;
+  }
+
+  .media-card img,
+  .media-card video {
+    max-height: 68vh;
   }
 }
 
