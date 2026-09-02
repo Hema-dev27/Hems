@@ -3,62 +3,31 @@ import { motion, AnimatePresence } from 'framer-motion'
 
 export default function Gallery({items, onAddFiles}){
   const [active, setActive] = useState(null)
-  const scrollerRef = useRef(null)
-  const rafRef = useRef(null)
-  const lastRef = useRef(0)
-  const pausedRef = useRef(false)
-  const [autoScroll, setAutoScroll] = useState(false)
-  const [targetSpeed, setTargetSpeed] = useState(80) // px per second
-  const currentSpeedRef = useRef(0)
+  const [currentIndex, setCurrentIndex] = useState(0)
 
-  useEffect(()=>{
-    const el = scrollerRef.current
-    if(!el) return
-    const onEnter = ()=> pausedRef.current = true
-    const onLeave = ()=> pausedRef.current = false
-    el.addEventListener('mouseenter', onEnter)
-    el.addEventListener('mouseleave', onLeave)
-    return ()=>{
-      el.removeEventListener('mouseenter', onEnter)
-      el.removeEventListener('mouseleave', onLeave)
-    }
-  }, [])
-
-  useEffect(()=>{
-    let running = true
-    lastRef.current = 0
-
-    const step = (ts)=>{
-      if(!running) return
-      if(!lastRef.current) lastRef.current = ts
-      const delta = ts - lastRef.current
-      lastRef.current = ts
-
-      // smooth ramp current speed towards targetSpeed when autoScroll on, else ramp down
-      const target = autoScroll ? targetSpeed : 0
-      const cur = currentSpeedRef.current
-      // lerp factor based on delta (fast response)
-      const t = Math.min(1, delta / 300)
-      const next = cur + (target - cur) * t
-      currentSpeedRef.current = next
-
-      if(!pausedRef.current && el.scrollWidth > el.clientWidth){
-        el.scrollLeft += next * (delta/1000)
-        if(el.scrollLeft + el.clientWidth >= el.scrollWidth - 1){
-          el.scrollLeft = 0
-        }
-      }
-
-      rafRef.current = requestAnimationFrame(step)
+  useEffect(() => {
+    if (items.length === 0) {
+      setCurrentIndex(0)
+      return
     }
 
-    rafRef.current = requestAnimationFrame(step)
-    return ()=>{ running = false; cancelAnimationFrame(rafRef.current); lastRef.current = 0 }
-  }, [autoScroll, targetSpeed])
+    setCurrentIndex((prev) => Math.min(prev, items.length - 1))
+  }, [items.length])
 
   const handleAdd = (files)=> onAddFiles(files)
 
-  // simplified: no presets or premium boost — classic, clean controls
+  const hasItems = items.length > 0
+  const currentItem = hasItems ? items[currentIndex] : null
+
+  const goToPrevious = () => {
+    if (!hasItems) return
+    setCurrentIndex((prev) => (prev === 0 ? items.length - 1 : prev - 1))
+  }
+
+  const goToNext = () => {
+    if (!hasItems) return
+    setCurrentIndex((prev) => (prev + 1) % items.length)
+  }
 
   return (
     <div className="gallery">
@@ -66,26 +35,55 @@ export default function Gallery({items, onAddFiles}){
         <label className="btn">Add files (temp preview)
           <input type="file" multiple accept="image/*,video/*,audio/*" onChange={(e)=>handleAdd(Array.from(e.target.files))} />
         </label>
-        <div className="auto-controls">
-          <label className="auto-toggle"><input type="checkbox" checked={autoScroll} onChange={(e)=>setAutoScroll(e.target.checked)} /> Auto-scroll</label>
-        </div>
         <small className="hint">Place permanent files in <code>/public/media/</code> and update <code>src/media.js</code>.</small>
       </div>
 
-        <div className="scroller-wrap">
-        <div className="scroller" ref={scrollerRef}>
-          {items.map(it => (
-            <motion.div key={it.id} layout whileHover={{ scale: 1.02 }} className="card-thumb" onClick={()=>setActive(it)}>
-              {it.type === 'image' && <img loading="lazy" src={it.src} alt={it.title} />}
-              {it.type === 'video' && <video loading="lazy" src={it.src} muted playsInline />}
-              {it.type === 'audio' && <div className="audio-thumb">🎵 {it.title}</div>}
-              <div className="caption">{it.title}</div>
-            </motion.div>
-          ))}
+      {hasItems ? (
+        <div className="gallery-showcase">
+          <div className="showcase-header">
+            <div>
+              <p className="eyebrow soft">Memory spotlight</p>
+              <h3>{currentItem.title}</h3>
+            </div>
+
+            <div className="showcase-nav">
+              <button type="button" className="nav-button" onClick={goToPrevious} aria-label="Previous memory">←</button>
+              <button type="button" className="nav-button" onClick={goToNext} aria-label="Next memory">→</button>
+            </div>
+          </div>
+
+          <motion.div
+            key={currentItem.id}
+            initial={{ opacity: 0, y: 18, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.35, ease: 'easeOut' }}
+            className="featured-media"
+            onClick={() => setActive(currentItem)}
+          >
+            {currentItem.type === 'image' && <img loading="lazy" src={currentItem.src} alt={currentItem.title} />}
+            {currentItem.type === 'video' && <video loading="lazy" src={currentItem.src} muted playsInline autoPlay loop />}
+            {currentItem.type === 'audio' && <div className="audio-thumb feature-audio">🎵 {currentItem.title}</div>}
+          </motion.div>
+
+          <div className="thumb-strip">
+            {items.map((it, index) => (
+              <button
+                key={it.id}
+                type="button"
+                className={`thumb-chip ${currentIndex === index ? 'active' : ''}`}
+                onClick={() => setCurrentIndex(index)}
+              >
+                {it.type === 'image' && <img loading="lazy" alt={it.title} src={it.src} />}
+                {it.type === 'video' && <video loading="lazy" muted playsInline src={it.src} />}
+                {it.type === 'audio' && <span className="mini-audio">♫</span>}
+                <span className="thumb-label">{it.title}</span>
+              </button>
+            ))}
+          </div>
         </div>
-        </div>
-        <div className="edge left" aria-hidden></div>
-        <div className="edge right" aria-hidden></div>
+      ) : (
+        <div className="empty-gallery">No memories yet. Add your first photo or video.</div>
+      )}
 
       <AnimatePresence>
         {active && (

@@ -223,23 +223,27 @@ button {
 }
 
 .mini-stats div {
-  background: rgba(255, 255, 255, 0.62);
-  border: 1px solid var(--line);
+  background: linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,245,247,0.8));
+  border: 1px solid rgba(138, 61, 75, 0.08);
   border-radius: 18px;
   padding: 16px 14px;
   display: flex;
   flex-direction: column;
   gap: 6px;
+  box-shadow: 0 12px 24px rgba(138, 61, 75, 0.04);
 }
 
 .mini-stats strong {
   color: var(--rose-deep);
-  font-size: 1.3rem;
+  font-size: 1.15rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .mini-stats span {
   color: var(--muted);
-  font-size: 0.78rem;
+  font-size: 0.8rem;
+  line-height: 1.5;
 }
 
 .hero-visual {
@@ -433,28 +437,97 @@ button {
 }
 
 .moments-grid {
+  position: relative;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 18px;
+  grid-template-columns: 48px minmax(0, 720px) 48px;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  padding: 8px 0;
 }
 
 .moment-card {
-  padding: 14px 14px 16px;
-  animation: floatCard 7s ease-in-out infinite alternate;
+  position: relative;
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr);
+  min-height: 220px;
+  min-width: 0;
+  overflow: hidden;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(138, 61, 75, 0.1);
+  box-shadow: 0 18px 32px rgba(83, 64, 60, 0.08);
+  animation: floatCard 8s ease-in-out infinite alternate;
 }
 
-.moment-card:nth-child(2) { animation-delay: 0.5s; }
-.moment-card:nth-child(3) { animation-delay: 1s; }
-.moment-card:nth-child(4) { animation-delay: 1.5s; }
+.moment-arrow {
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(138, 61, 75, 0.14);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--rose-deep);
+  font-family: Georgia, serif;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 12px 22px rgba(83, 64, 60, 0.08);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.moment-arrow:hover {
+  background: white;
+  transform: scale(1.08);
+}
+
+.moment-image-wrap {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(255, 240, 243, 0.9), rgba(237, 245, 238, 0.9));
+}
 
 .moment-image {
   width: 100%;
-  height: 180px;
-  object-fit: cover;
-  object-position: center top;
+  height: 100%;
+  min-height: 220px;
+  object-fit: contain;
+  object-position: center;
   border-radius: 16px;
   display: block;
-  margin-bottom: 12px;
+  padding: 14px;
+  transition: transform 0.5s ease;
+}
+
+.moment-card:hover .moment-image {
+  transform: scale(1.035);
+}
+
+.moment-number {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--rose-deep);
+  font-family: Georgia, serif;
+  font-size: 0.95rem;
+  box-shadow: 0 8px 18px rgba(83, 64, 60, 0.08);
+}
+
+.moment-copy {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 1;
+  padding: 24px 28px;
+  background: rgba(255, 255, 255, 0.86);
 }
 
 .moment-card span {
@@ -568,6 +641,128 @@ button {
   margin-bottom: 16px;
 }
 
+.gallery-showcase {
+  display: grid;
+  gap: 18px;
+}
+
+.showcase-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.showcase-header h3 {
+  margin: 6px 0 0;
+  font-family: Georgia, serif;
+  color: var(--rose-deep);
+  font-size: clamp(1.7rem, 2vw, 2.4rem);
+}
+
+.showcase-nav {
+  display: flex;
+  gap: 10px;
+}
+
+.nav-button {
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(138, 61, 75, 0.12);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--rose-deep);
+  font-size: 1.25rem;
+  cursor: pointer;
+  box-shadow: 0 10px 22px rgba(83, 64, 60, 0.06);
+}
+
+.featured-media {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.88), rgba(244, 239, 235, 0.82));
+  border: 1px solid rgba(138, 61, 75, 0.08);
+  border-radius: 26px;
+  padding: 16px;
+  box-shadow: 0 20px 34px rgba(83, 64, 60, 0.08);
+  cursor: pointer;
+}
+
+.featured-media img,
+.featured-media video {
+  display: block;
+  width: 100%;
+  max-height: 420px;
+  object-fit: contain;
+  object-position: center;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(255, 240, 243, 0.9), rgba(237, 245, 238, 0.9));
+}
+
+.feature-audio {
+  min-height: 260px;
+  font-size: 1.2rem;
+}
+
+.thumb-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.thumb-chip {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 10px 8px 8px;
+  border: 1px solid rgba(138, 61, 75, 0.08);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--forest);
+  text-align: left;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.thumb-chip.active {
+  border-color: rgba(138, 61, 75, 0.22);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 18px rgba(83, 64, 60, 0.06);
+}
+
+.thumb-chip img,
+.thumb-chip video,
+.mini-audio {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(255, 225, 230, 0.82), rgba(188, 216, 197, 0.9));
+  color: var(--rose-deep);
+  font-weight: 700;
+}
+
+.thumb-label {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 700;
+  font-size: 0.82rem;
+}
+
+.empty-gallery {
+  padding: 22px 16px;
+  text-align: center;
+  color: var(--muted);
+  border: 1px dashed rgba(138, 61, 75, 0.18);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.5);
+}
+
 .gallery .btn {
   display: inline-flex;
   align-items: center;
@@ -591,58 +786,6 @@ button {
   line-height: 1.5;
 }
 
-.scroller-wrap {
-  position: relative;
-}
-
-.scroller {
-  display: flex;
-  gap: 14px;
-  overflow-x: auto;
-  padding: 10px 6px 14px;
-  scroll-behavior: smooth;
-}
-
-.scroller::-webkit-scrollbar {
-  height: 10px;
-}
-
-.scroller::-webkit-scrollbar-track {
-  background: rgba(138, 61, 75, 0.05);
-  border-radius: 999px;
-}
-
-.scroller::-webkit-scrollbar-thumb {
-  background: linear-gradient(90deg, var(--rose) 0%, var(--rose-deep) 100%);
-  border-radius: 999px;
-}
-
-.card-thumb {
-  min-width: 260px;
-  flex: 0 0 260px;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(138, 61, 75, 0.07);
-  box-shadow: 0 12px 26px rgba(83, 64, 60, 0.06);
-  padding: 12px;
-  cursor: pointer;
-  transition: transform 0.25s ease;
-}
-
-.card-thumb:hover {
-  transform: translateY(-5px);
-}
-
-.card-thumb img,
-.card-thumb video {
-  display: block;
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  object-position: center top;
-  border-radius: 12px;
-}
-
 .audio-thumb {
   display: flex;
   align-items: center;
@@ -654,30 +797,6 @@ button {
   color: var(--rose-deep);
   font-weight: 700;
   text-align: center;
-}
-
-.card-thumb .caption {
-  margin-top: 10px;
-  font-weight: 700;
-  color: var(--forest);
-}
-
-.edge {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 76px;
-  pointer-events: none;
-}
-
-.edge.left {
-  left: 0;
-  background: linear-gradient(90deg, rgba(255, 250, 245, 1), rgba(255, 250, 245, 0));
-}
-
-.edge.right {
-  right: 0;
-  background: linear-gradient(270deg, rgba(255, 250, 245, 1), rgba(255, 250, 245, 0));
 }
 
 .media-modal {
@@ -760,7 +879,8 @@ button {
   }
 
   .moments-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 42px minmax(0, 1fr) 42px;
+    gap: 10px;
   }
 }
 
@@ -788,7 +908,21 @@ button {
 
   .mini-stats,
   .moments-grid {
+    grid-template-columns: 36px minmax(0, 1fr) 36px;
+    gap: 6px;
+  }
+
+  .moment-card {
     grid-template-columns: 1fr;
+  }
+
+  .moment-image {
+    height: 180px;
+    min-height: 180px;
+  }
+
+  .moment-copy {
+    padding: 18px 20px 20px;
   }
 
   .hero-actions {

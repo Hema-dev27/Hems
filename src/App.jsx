@@ -12,9 +12,9 @@ const reasons = [
 ]
 
 const favoriteMoments = [
-  { title: 'The first time we clicked', detail: 'Like two pieces of a quiet, beautiful story finally meeting.', image: '/media/us.jpg' },
-  { title: 'Our laughter', detail: 'The kind that softens the world and turns small moments into memories.', image: '/media/us.jpg' },
-  { title: 'Our calm dates', detail: 'The simple times were the ones that stayed with me the longest.', image: '/media/us.jpg' },
+  { title: 'Those Little Things', detail: 'One day Just like that I mentioned why cant you try Running And you actually did it❤️ result is in the second pic.', image: '/media/instaMarathon.jpg' },
+  { title: 'FOR HER', detail: 'For Her❤️ , I still remember the exact feeling i had that day , I just woke unlocked my phone turned on the mobile data , And the first thing i saw is this PIC, Lots of Loveee.', image: '/media/forHER.jpg' },
+  { title: 'Robbery', detail: 'You stealed The Letter ? 😂 , Just like how you stealed me❤️.', image: '/media/letterH.jpg' },
   { title: 'Every little “us” moment', detail: 'Because love is not just big gestures — it is the feeling of being chosen.', image: '/media/us.jpg' }
 ]
 
@@ -37,6 +37,15 @@ export default function App() {
   ]
 
   const [activeTab, setActiveTab] = useState('all')
+  const [activeMoment, setActiveMoment] = useState(0)
+
+  const showPreviousMoment = () => {
+    setActiveMoment((current) => (current === 0 ? favoriteMoments.length - 1 : current - 1))
+  }
+
+  const showNextMoment = () => {
+    setActiveMoment((current) => (current + 1) % favoriteMoments.length)
+  }
 
   const addFiles = (files) => {
     const created = files.map((f, idx) => {
@@ -148,13 +157,24 @@ export default function App() {
           </div>
 
           <div className="moments-grid">
-            {favoriteMoments.map((moment) => (
-              <div className="moment-card" key={moment.title}>
-                <img className="moment-image" src={moment.image} alt={moment.title} />
-                <span>{moment.title}</span>
-                <p>{moment.detail}</p>
+            <button type="button" className="moment-arrow moment-arrow-left" onClick={showPreviousMoment} aria-label="Previous moment">‹</button>
+            <motion.article
+              key={favoriteMoments[activeMoment].title}
+              className="moment-card"
+              initial={{ opacity: 0, x: 18 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.35, ease: 'easeOut' }}
+            >
+              <div className="moment-image-wrap">
+                <img className="moment-image" src={favoriteMoments[activeMoment].image} alt={favoriteMoments[activeMoment].title} />
+                <span className="moment-number">0{activeMoment + 1}</span>
               </div>
-            ))}
+              <div className="moment-copy">
+                <span>{favoriteMoments[activeMoment].title}</span>
+                <p>{favoriteMoments[activeMoment].detail}</p>
+              </div>
+            </motion.article>
+            <button type="button" className="moment-arrow moment-arrow-right" onClick={showNextMoment} aria-label="Next moment">›</button>
           </div>
         </section>
 
