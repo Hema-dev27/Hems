@@ -63,6 +63,13 @@ export default function Gallery({items, onAddFiles}){
             {currentItem.type === 'image' && <img loading="lazy" src={currentItem.src} alt={currentItem.title} />}
             {currentItem.type === 'video' && <video loading="lazy" src={currentItem.src} muted playsInline autoPlay loop />}
             {currentItem.type === 'audio' && <div className="audio-thumb feature-audio">🎵 {currentItem.title}</div>}
+            <div className="floating-gallery-hearts" aria-hidden="true">
+              <span>♥</span>
+              <span>♡</span>
+              <span>♥</span>
+              <span>♡</span>
+              <span>♥</span>
+            </div>
           </motion.div>
 
           <div className="thumb-strip">

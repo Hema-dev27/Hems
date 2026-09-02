@@ -439,7 +439,7 @@ button {
 .moments-grid {
   position: relative;
   display: grid;
-  grid-template-columns: 48px minmax(0, 720px) 48px;
+  grid-template-columns: 48px minmax(0, 880px) 48px;
   justify-content: center;
   align-items: center;
   gap: 14px;
@@ -449,8 +449,8 @@ button {
 .moment-card {
   position: relative;
   display: grid;
-  grid-template-columns: 250px minmax(0, 1fr);
-  min-height: 220px;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 0.8fr);
+  min-height: 390px;
   min-width: 0;
   overflow: hidden;
   padding: 0;
@@ -482,7 +482,8 @@ button {
 
 .moment-image-wrap {
   position: relative;
-  min-height: 0;
+  width: 100%;
+  height: 390px;
   overflow: hidden;
   background: linear-gradient(135deg, rgba(255, 240, 243, 0.9), rgba(237, 245, 238, 0.9));
 }
@@ -490,12 +491,12 @@ button {
 .moment-image {
   width: 100%;
   height: 100%;
-  min-height: 220px;
+  min-height: 0;
   object-fit: contain;
   object-position: center;
   border-radius: 16px;
   display: block;
-  padding: 14px;
+  padding: 5px;
   transition: transform 0.5s ease;
 }
 
@@ -642,8 +643,39 @@ button {
 }
 
 .gallery-showcase {
+  position: relative;
   display: grid;
   gap: 18px;
+}
+
+.gallery-showcase::before,
+.gallery-showcase::after {
+  content: '';
+  position: absolute;
+  top: 46%;
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 16%, rgba(184, 109, 115, 0.55) 0 16%, transparent 17%),
+    radial-gradient(circle at 84% 40%, rgba(127, 157, 138, 0.48) 0 16%, transparent 17%),
+    radial-gradient(circle at 70% 80%, rgba(184, 109, 115, 0.55) 0 16%, transparent 17%),
+    radial-gradient(circle at 30% 80%, rgba(127, 157, 138, 0.48) 0 16%, transparent 17%),
+    radial-gradient(circle at 16% 40%, rgba(184, 109, 115, 0.55) 0 16%, transparent 17%),
+    radial-gradient(circle at center, rgba(255, 247, 226, 0.95) 0 13%, transparent 14%);
+  pointer-events: none;
+  z-index: 0;
+  animation: flowerFloat 6s ease-in-out infinite;
+}
+
+.gallery-showcase::before {
+  left: -56px;
+}
+
+.gallery-showcase::after {
+  right: -56px;
+  animation-delay: -3s;
+  transform: rotate(18deg);
 }
 
 .showcase-header {
@@ -678,6 +710,8 @@ button {
 }
 
 .featured-media {
+  position: relative;
+  z-index: 1;
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.88), rgba(244, 239, 235, 0.82));
   border: 1px solid rgba(138, 61, 75, 0.08);
   border-radius: 26px;
@@ -695,6 +729,36 @@ button {
   object-position: center;
   border-radius: 18px;
   background: linear-gradient(135deg, rgba(255, 240, 243, 0.9), rgba(237, 245, 238, 0.9));
+}
+
+.floating-gallery-hearts {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.floating-gallery-hearts span {
+  position: absolute;
+  bottom: 4%;
+  color: rgba(184, 109, 115, 0.78);
+  font-size: 1.8rem;
+  filter: drop-shadow(0 5px 8px rgba(138, 61, 75, 0.16));
+  animation: heartRise 5s ease-in-out infinite;
+}
+
+.floating-gallery-hearts span:nth-child(1) { left: 18%; animation-delay: -1s; }
+.floating-gallery-hearts span:nth-child(2) { left: 38%; color: rgba(127, 157, 138, 0.82); animation-delay: -3.2s; }
+.floating-gallery-hearts span:nth-child(3) { left: 58%; font-size: 1.5rem; animation-delay: -4.4s; }
+.floating-gallery-hearts span:nth-child(4) { left: 74%; color: rgba(127, 157, 138, 0.82); font-size: 1.55rem; animation-delay: -2.2s; }
+.floating-gallery-hearts span:nth-child(5) { left: 86%; font-size: 1.35rem; animation-delay: -0.4s; }
+
+@keyframes heartRise {
+  0% { transform: translate3d(0, 12px, 0) scale(0.65) rotate(-10deg); opacity: 0; }
+  20% { opacity: 0.85; }
+  50% { transform: translate3d(12px, -90px, 0) scale(1) rotate(8deg); opacity: 0.8; }
+  100% { transform: translate3d(-10px, -180px, 0) scale(0.7) rotate(-8deg); opacity: 0; }
 }
 
 .feature-audio {
@@ -871,6 +935,11 @@ button {
   100% { transform: translateY(-8px) translateZ(26px); }
 }
 
+@keyframes flowerFloat {
+  0%, 100% { transform: translateY(-50%) translateX(0) rotate(0deg) scale(0.82); opacity: 0.35; }
+  50% { transform: translateY(calc(-50% - 12px)) translateX(10px) rotate(12deg) scale(1); opacity: 0.9; }
+}
+
 @media (max-width: 900px) {
   .hero,
   .story-grid,
@@ -914,6 +983,10 @@ button {
 
   .moment-card {
     grid-template-columns: 1fr;
+  }
+
+  .moment-image-wrap {
+    height: 180px;
   }
 
   .moment-image {
